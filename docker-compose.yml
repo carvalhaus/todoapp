@@ -1,0 +1,13 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    volumes:
+      - ./server/db:/var/lib/postgresql/data
+      - ./server/data.sql:/docker-entrypoint-initdb.d/data.sql
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
