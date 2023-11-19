@@ -1,0 +1,33 @@
+button {
+  border: 1px solid;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  outline: none;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.add-new {
+  background-color: transparent;
+  border-color: var(--gray-30);
+  color: var(--gray-30);
+}
+
+.sign-out {
+  background-color: var(--orange-30);
+  color: #fff;
+  border: none;
+}
+
+.edit {
+  background-color: transparent;
+  border-color: var(--green-20);
+  color: var(--green-20);
+}
+
+.delete {
+  background-color: transparent;
+  border-color: var(--rose);
+  color: var(--rose);
+}
