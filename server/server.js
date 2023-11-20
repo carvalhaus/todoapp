@@ -4,8 +4,13 @@ const app = express();
 const pool = require("./db");
 
 app.get("/todos", async (req, res) => {
+  const userEmail = "admin@teste.com";
+
   try {
-    const todos = await pool.query("SELECT * FROM todos");
+    const todos = await pool.query(
+      "SELECT * FROM todos WHERE user_email = $1",
+      [userEmail]
+    );
     res.json(todos.rows);
   } catch (error) {
     console.error(error);
