@@ -1,11 +1,14 @@
 import "./App.css";
 import TodoApp from "./components/todoapp";
+import { APIContextProvider } from "./context/apiContext";
 
 function App() {
   return (
-    <main className="main">
-      <TodoApp />
-    </main>
+    <APIContextProvider>
+      <main className="main">
+        <TodoApp />
+      </main>
+    </APIContextProvider>
   );
 }
 
