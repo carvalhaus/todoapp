@@ -14,10 +14,25 @@ button {
   color: var(--gray-30);
 }
 
+.add-new:hover {
+  background-color: var(--gray-30);
+  color: #fff;
+}
+
 .sign-out {
   background-color: var(--orange-30);
+  border-color: var(--orange-30);
   color: #fff;
-  border: none;
+}
+
+.sign-out:hover {
+  background-color: var(--orange-50);
+  border-color: var(--orange-50);
+}
+
+.sign-out:active {
+  background-color: var(--orange-60) !important;
+  border-color: var(--orange-60) !important;
 }
 
 .edit {
@@ -26,8 +41,18 @@ button {
   color: var(--green-20);
 }
 
+.edit:hover {
+  background-color: var(--green-20);
+  color: #fff;
+}
+
 .delete {
   background-color: transparent;
   border-color: var(--rose);
   color: var(--rose);
+}
+
+.delete:hover {
+  background-color: var(--rose);
+  color: #fff;
 }
