@@ -8,13 +8,13 @@ button {
   text-transform: uppercase;
 }
 
-.add-new {
+.create {
   background-color: transparent;
   border-color: var(--gray-30);
   color: var(--gray-30);
 }
 
-.add-new:hover {
+.create:hover {
   background-color: var(--gray-30);
   color: #fff;
 }
