@@ -3,8 +3,7 @@ import "./style.css";
 import Button from "../button";
 import { useState } from "react";
 
-const NewTaksModal = () => {
-  const mode = "create";
+const NewTaksModal = ({ mode, setShowModal }) => {
   const editMode = mode === "edit" ? true : false;
 
   const [data, setData] = useState({
@@ -30,7 +29,11 @@ const NewTaksModal = () => {
       <div className="modal">
         <div className="modal__header">
           <h2>Let's {mode} your task !</h2>
-          <button>
+          <button
+            onClick={() => {
+              setShowModal(false);
+            }}
+          >
             <CloseOutlinedIcon />
           </button>
         </div>
