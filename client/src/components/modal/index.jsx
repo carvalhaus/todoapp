@@ -3,13 +3,13 @@ import "./style.css";
 import Button from "../button";
 import { useState } from "react";
 
-const NewTaksModal = ({ mode, setShowModal }) => {
+const NewTaksModal = ({ mode, setShowModal, task }) => {
   const editMode = mode === "edit" ? true : false;
 
   const [data, setData] = useState({
-    user_email: "",
-    title: "",
-    progress: "",
+    user_email: editMode ? task.user_email : null,
+    title: editMode ? task.title : null,
+    progress: editMode ? task.progress : 50,
     date: editMode ? "" : new Date(),
   });
 
@@ -50,19 +50,17 @@ const NewTaksModal = ({ mode, setShowModal }) => {
             onChange={handleChange}
           />
 
-          <label for="progress">
-            Drag to select your current progress
-            <input
-              required
-              type="range"
-              id="progress"
-              name="progress"
-              min="0"
-              max="100"
-              value={data.progress}
-              onChange={handleChange}
-            />
-          </label>
+          <label for="progress">Drag to select your current progress</label>
+          <input
+            required
+            type="range"
+            id="progress"
+            name="progress"
+            min="0"
+            max="100"
+            value={data.progress}
+            onChange={handleChange}
+          />
 
           <Button text={mode} className={mode} />
         </form>

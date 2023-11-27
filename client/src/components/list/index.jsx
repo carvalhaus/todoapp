@@ -14,7 +14,7 @@ const List = () => {
   return (
     <ul className="list">
       {sortedTasks?.map((task) => (
-        <ListItem key={task.id} task={task.title} />
+        <ListItem key={task.id} task={task} />
       ))}
     </ul>
   );

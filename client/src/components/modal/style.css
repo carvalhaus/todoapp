@@ -23,7 +23,7 @@
 .modal .form {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .modal__header {
@@ -43,11 +43,4 @@
   border-radius: 0.25rem;
   outline: none;
   padding: 1rem;
-}
-
-.form label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-  gap: 0.625rem;
 }
