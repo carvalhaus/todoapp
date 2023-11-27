@@ -4,7 +4,26 @@ import Button from "../button";
 import { useState } from "react";
 
 const NewTaksModal = () => {
-  const [mode, setMode] = useState("create");
+  const mode = "create";
+  const editMode = mode === "edit" ? true : false;
+
+  const [data, setData] = useState({
+    user_email: "",
+    title: "",
+    progress: "",
+    date: editMode ? "" : new Date(),
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((data) => ({
+      ...data,
+      [name]: value,
+    }));
+
+    console.log(data);
+  };
 
   return (
     <div className="overlay">
@@ -24,7 +43,8 @@ const NewTaksModal = () => {
             type="text"
             placeholder="Write down your task"
             name="title"
-            value={""}
+            value={data.title}
+            onChange={handleChange}
           />
 
           <label for="progress">
@@ -36,7 +56,8 @@ const NewTaksModal = () => {
               name="progress"
               min="0"
               max="100"
-              value={""}
+              value={data.progress}
+              onChange={handleChange}
             />
           </label>
 
