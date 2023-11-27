@@ -1,6 +1,5 @@
 import Header from "../header";
 import List from "../list";
-import NewTaksModal from "../modal";
 import User from "../user";
 import "./style.css";
 
@@ -10,7 +9,6 @@ const TodoApp = () => {
       <Header />
       <User />
       <List />
-      <NewTaksModal />
     </div>
   );
 };
