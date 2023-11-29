@@ -19,7 +19,9 @@ export function APIContextProvider({ children }) {
   useEffect(() => getData, []);
 
   return (
-    <APIContext.Provider value={{ tasks }}>{children}</APIContext.Provider>
+    <APIContext.Provider value={{ tasks, getData }}>
+      {children}
+    </APIContext.Provider>
   );
 }
 

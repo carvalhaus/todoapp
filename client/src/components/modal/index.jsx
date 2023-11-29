@@ -2,16 +2,59 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import "./style.css";
 import Button from "../button";
 import { useState } from "react";
+import { useAPI } from "../../context/apiContext";
 
 const NewTaksModal = ({ mode, setShowModal, task }) => {
+  const { getData } = useAPI();
+
   const editMode = mode === "edit" ? true : false;
 
   const [data, setData] = useState({
-    user_email: editMode ? task.user_email : null,
-    title: editMode ? task.title : null,
+    user_email: editMode ? task.user_email : "admin@teste.com",
+    title: editMode ? task.title : "",
     progress: editMode ? task.progress : 50,
     date: editMode ? "" : new Date(),
   });
+
+  const postData = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8000/todos/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.status === 200) {
+        console.log("DONE");
+        setShowModal(false);
+        getData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const editData = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:8000/todos/${task.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.status === 200) {
+        console.log("EDITED");
+        setShowModal(false);
+        getData();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +105,11 @@ const NewTaksModal = ({ mode, setShowModal, task }) => {
             onChange={handleChange}
           />
 
-          <Button text={mode} className={mode} />
+          <Button
+            text={mode}
+            className={mode}
+            onClick={editMode ? editData : postData}
+          />
         </form>
       </div>
     </div>
