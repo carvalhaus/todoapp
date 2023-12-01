@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useAPI } from "../../context/apiContext";
 
 const NewTaksModal = ({ mode, setShowModal, task }) => {
-  const { getData } = useAPI();
+  const { getData, postData, updateData } = useAPI();
 
   const editMode = mode === "edit" ? true : false;
 
@@ -16,44 +16,19 @@ const NewTaksModal = ({ mode, setShowModal, task }) => {
     date: editMode ? "" : new Date(),
   });
 
-  const postData = async (e) => {
+  const addTask = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`http://localhost:8000/todos/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.status === 200) {
-        console.log("DONE");
-        setShowModal(false);
-        getData();
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    await postData(data);
+
+    setShowModal(false);
+    getData();
   };
 
   const editData = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch(`http://localhost:8000/todos/${task.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (response.status === 200) {
-        console.log("EDITED");
-        setShowModal(false);
-        getData();
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    await updateData(task.id, data);
+    setShowModal(false);
+    getData();
   };
 
   const handleChange = (e) => {
@@ -108,7 +83,7 @@ const NewTaksModal = ({ mode, setShowModal, task }) => {
           <Button
             text={mode}
             className={mode}
-            onClick={editMode ? editData : postData}
+            onClick={editMode ? editData : addTask}
           />
         </form>
       </div>
