@@ -37,7 +37,7 @@ app.post("/todos", async (req, res) => {
   }
 });
 
-app.put("todos/:id", async (req, res) => {
+app.put("/todos/:id", async (req, res) => {
   const { id } = req.params;
   const { user_email, title, progress, date } = req.body;
 
@@ -47,6 +47,19 @@ app.put("todos/:id", async (req, res) => {
       [user_email, title, progress, date, id]
     );
     res.json(editTodo);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.delete("/todos/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleteTodo = await pool.query("DELETE FROM todos WHERE id = $1", [
+      id,
+    ]);
+    res.json(deleteTodo);
   } catch (error) {
     console.error(error);
   }
