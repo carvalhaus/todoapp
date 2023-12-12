@@ -56,3 +56,13 @@ button {
   background-color: var(--rose);
   color: #fff;
 }
+
+.login {
+  background-color: var(--blue-80);
+  border-color: var(--blue-80);
+  color: #fff;
+}
+
+.login:hover {
+  opacity: 0.9;
+}
