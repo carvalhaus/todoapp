@@ -66,3 +66,13 @@ button {
 .login:hover {
   opacity: 0.9;
 }
+
+.sign_up {
+  background-color: var(--blue-40);
+  border-color: var(--blue-40);
+  color: #fff;
+}
+
+.sign_up:hover {
+  opacity: 0.9;
+}
