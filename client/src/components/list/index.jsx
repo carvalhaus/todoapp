@@ -9,8 +9,6 @@ const List = () => {
     (a, b) => new Date(a.date) - new Date(b.date)
   );
 
-  console.log(sortedTasks);
-
   return (
     <ul className="list">
       {sortedTasks?.map((task) => (
