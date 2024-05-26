@@ -1,8 +1,12 @@
 "use client";
 
+import useGoogleAuth from "@/hooks/useGoogleAuth";
+
 function GoogleButton({ children, className }) {
+  const { handleGoogleAuth } = useGoogleAuth();
+
   const onClick = () => {
-    console.log("LOGIN BUTTON CLICKED");
+    handleGoogleAuth();
   };
 
   return (
