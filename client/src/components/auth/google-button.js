@@ -1,6 +1,6 @@
 "use client";
 
-function LoginButton({ children, className }) {
+function GoogleButton({ children, className }) {
   const onClick = () => {
     console.log("LOGIN BUTTON CLICKED");
   };
@@ -12,4 +12,4 @@ function LoginButton({ children, className }) {
   );
 }
 
-export default LoginButton;
+export default GoogleButton;
