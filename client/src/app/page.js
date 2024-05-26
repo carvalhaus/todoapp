@@ -14,7 +14,7 @@ export default function Home() {
       <div className="w-4/5 h-full flex flex-col gap-20">
         <nav className="py-6 flex justify-between">
           <Image src={logo} alt="Logo Onday image" width={114} height={38} />
-          <Link href="/auth">
+          <Link href="/auth/login">
             <Button className="rounded-2xl font-semibold">Let's focus</Button>
           </Link>
         </nav>
