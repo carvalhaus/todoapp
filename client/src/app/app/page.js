@@ -24,7 +24,7 @@ function App() {
               <AvatarImage src={user.photoURL} />
             ) : (
               <AvatarFallback className="bg-slate-800 text-white">
-                {user?.displayName[0]}
+                JP
               </AvatarFallback>
             )}
           </Avatar>

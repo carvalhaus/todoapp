@@ -16,6 +16,7 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { useTransition } from "react";
+import UseRegisterEmail from "@/hooks/useRegisterEmail";
 
 const RegisterSchema = z
   .object({
@@ -38,6 +39,7 @@ const RegisterSchema = z
 
 function RegisterForm() {
   const [isPending, startTransition] = useTransition();
+  const { handleRegisterEmail } = UseRegisterEmail();
 
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
@@ -51,16 +53,7 @@ function RegisterForm() {
 
   const onSubmit = (values) => {
     startTransition(async () => {
-      try {
-        const response = await axios.post(
-          "https://jsonplaceholder.typicode.com/posts",
-          values
-        );
-
-        console.log("Data posted successfully:", response.data);
-      } catch (error) {
-        console.error("Error posting data:", error);
-      }
+      handleRegisterEmail(values.email, values.password);
     });
   };
 
