@@ -1,11 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import logo from "../../../public/images/logo.svg";
 import noData from "../../../public/no_data.svg";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useUser } from "@/context/userContext";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 function App() {
+  const { user } = useUser();
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">
       <div className="w-10/12 flex flex-col gap-3">
@@ -14,10 +19,14 @@ function App() {
             <Image src={logo} alt="Logo Onday image" width={114} height={38} />
           </Link>
 
-          <Avatar>
-            <AvatarFallback className="bg-slate-800 text-white">
-              JP
-            </AvatarFallback>
+          <Avatar className="border-2 border-slate-500">
+            {user?.photoURL ? (
+              <AvatarImage src={user.photoURL} />
+            ) : (
+              <AvatarFallback className="bg-slate-800 text-white">
+                {user?.displayName[0]}
+              </AvatarFallback>
+            )}
           </Avatar>
         </div>
         <div className="border-gray-300 border-[1px] drop-shadow-md rounded-md bg-white p-4 w-full flex flex-col items-center gap-12">
