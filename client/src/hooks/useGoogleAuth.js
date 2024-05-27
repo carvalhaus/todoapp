@@ -1,7 +1,10 @@
 const { auth } = require("@/services/firebase");
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 function useGoogleAuth() {
+  const router = useRouter();
+
   const handleGoogleAuth = () => {
     const provider = new GoogleAuthProvider();
 
@@ -11,6 +14,10 @@ function useGoogleAuth() {
         const token = credential.accessToken;
         const user = result.user;
       })
+      .then(() => {
+        router.push("/app");
+      })
+
       .catch((error) => {
         console.log(error);
       });
