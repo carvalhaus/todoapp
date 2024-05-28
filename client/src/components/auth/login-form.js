@@ -16,6 +16,7 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { useTransition } from "react";
+import userLoginEmail from "@/hooks/useLoginEmail";
 
 const LoginSchema = z.object({
   email: z.string().email({ message: "Email is required" }),
@@ -24,6 +25,7 @@ const LoginSchema = z.object({
 
 function LoginForm() {
   const [isPending, startTransition] = useTransition();
+  const { handleLoginEmail } = userLoginEmail();
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -35,16 +37,7 @@ function LoginForm() {
 
   const onSubmit = (values) => {
     startTransition(async () => {
-      try {
-        const response = await axios.post(
-          "https://jsonplaceholder.typicode.com/posts",
-          values
-        );
-
-        console.log("Data posted successfully:", response.data);
-      } catch (error) {
-        console.error("Error posting data:", error);
-      }
+      handleLoginEmail(values.email, values.password);
     });
   };
 

@@ -21,10 +21,10 @@ function App() {
 
           <Avatar className="border-2 border-slate-500">
             {user?.photoURL ? (
-              <AvatarImage src={user.photoURL} />
+              <AvatarImage src={user?.photoURL} />
             ) : (
               <AvatarFallback className="bg-slate-800 text-white">
-                JP
+                {user?.displayName[0]}
               </AvatarFallback>
             )}
           </Avatar>
