@@ -1,22 +1,33 @@
 import { useRouter } from "next/navigation";
 
 const { auth } = require("@/services/firebase");
-const { createUserWithEmailAndPassword } = require("firebase/auth");
+const {
+  createUserWithEmailAndPassword,
+  setPersistence,
+  browserSessionPersistence,
+  updateProfile,
+} = require("firebase/auth");
 
 function UseRegisterEmail() {
   const router = useRouter();
 
-  const handleRegisterEmail = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+  const handleRegisterEmail = (email, password, username) => {
+    setPersistence(auth, browserSessionPersistence).then(async () => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         const user = userCredential.user;
-      })
-      .then(() => {
+        updateProfile(auth.currentUser, {
+          displayName: username,
+        });
         router.push("/app");
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+      }
+    });
   };
 
   return {

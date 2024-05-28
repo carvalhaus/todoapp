@@ -1,5 +1,10 @@
 const { auth } = require("@/services/firebase");
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  browserSessionPersistence,
+  setPersistence,
+  signInWithPopup,
+} from "firebase/auth";
 import { useRouter } from "next/navigation";
 
 function useGoogleAuth() {
@@ -8,19 +13,17 @@ function useGoogleAuth() {
   const handleGoogleAuth = () => {
     const provider = new GoogleAuthProvider();
 
-    signInWithPopup(auth, provider)
-      .then((result) => {
+    setPersistence(auth, browserSessionPersistence).then(async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-      })
-      .then(() => {
         router.push("/app");
-      })
-
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
-      });
+      }
+    });
   };
 
   const handleLogout = async () => {
