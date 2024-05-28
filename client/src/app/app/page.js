@@ -61,9 +61,7 @@ function App() {
             <h1 className="text-4xl font-medium">Keep focus</h1>
             <Dialog>
               <DialogTrigger>
-                <Button className="uppercase font-medium bg-slate-700">
-                  Add task
-                </Button>
+                <Button className="uppercase font-medium">Add task</Button>
               </DialogTrigger>
               <DialogContent>
                 <AddTask />
