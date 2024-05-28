@@ -16,7 +16,7 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { useTransition } from "react";
-import UseRegisterEmail from "@/hooks/useRegisterEmail";
+import useRegisterEmail from "@/hooks/useRegisterEmail";
 
 const RegisterSchema = z
   .object({
@@ -39,7 +39,7 @@ const RegisterSchema = z
 
 function RegisterForm() {
   const [isPending, startTransition] = useTransition();
-  const { handleRegisterEmail } = UseRegisterEmail();
+  const { handleRegisterEmail } = useRegisterEmail();
 
   const form = useForm({
     resolver: zodResolver(RegisterSchema),
@@ -53,7 +53,7 @@ function RegisterForm() {
 
   const onSubmit = (values) => {
     startTransition(async () => {
-      handleRegisterEmail(values.email, values.password);
+      handleRegisterEmail(values.email, values.password, values.name);
     });
   };
 
