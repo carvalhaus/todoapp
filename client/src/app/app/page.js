@@ -8,9 +8,21 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useUser } from "@/context/userContext";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 function App() {
   const { user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    const keySession = Object.keys(sessionStorage);
+    const session = sessionStorage.getItem(keySession);
+    if (!session) {
+      router.push("/"); // Redirect to login or home page
+    }
+  }, [router]);
+
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">
       <div className="w-10/12 flex flex-col gap-3">
