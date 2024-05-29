@@ -38,14 +38,14 @@ function App() {
           </Link>
 
           <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <Avatar className="border-2 border-slate-500">
-                {user?.photoURL ? (
-                  <AvatarImage src={user?.photoURL} />
-                ) : (
+                {!user?.photoURL ? (
                   <AvatarFallback className="bg-slate-800 text-white">
                     {user?.displayName[0]}
                   </AvatarFallback>
+                ) : (
+                  <AvatarImage src={user?.photoURL} />
                 )}
               </Avatar>
             </DialogTrigger>
@@ -60,7 +60,7 @@ function App() {
           <div className="border-b-[1px] w-full flex justify-between pb-4">
             <h1 className="text-4xl font-medium">Keep focus</h1>
             <Dialog>
-              <DialogTrigger>
+              <DialogTrigger asChild>
                 <Button className="uppercase font-medium">Add task</Button>
               </DialogTrigger>
               <DialogContent>
