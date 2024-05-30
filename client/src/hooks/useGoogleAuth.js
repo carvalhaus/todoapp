@@ -28,7 +28,7 @@ function useGoogleAuth() {
               },
             });
           })
-          .then((res) => {
+          .then(() => {
             router.push("/app");
           });
       })
@@ -37,11 +37,7 @@ function useGoogleAuth() {
       });
   };
 
-  const handleLogout = async () => {
-    await auth.signOut();
-  };
-
-  return { handleGoogleAuth, handleLogout };
+  return { handleGoogleAuth };
 }
 
 export default useGoogleAuth;

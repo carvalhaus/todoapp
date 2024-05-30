@@ -1,6 +1,7 @@
 "use client";
 
 import { auth } from "@/services/firebase";
+import { useRouter } from "next/navigation";
 
 const { createContext, useContext, useState, useEffect } = require("react");
 
@@ -12,8 +13,15 @@ export const useUser = () => {
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState();
+  const router = useRouter();
 
   console.log("Context", user);
+
+  const handleLogout = async () => {
+    await auth.signOut().then(() => {
+      router.push("/");
+    });
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -24,6 +32,8 @@ export default function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, handleLogout }}>
+      {children}
+    </UserContext.Provider>
   );
 }

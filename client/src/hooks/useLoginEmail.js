@@ -26,12 +26,9 @@ function useLoginEmail() {
               },
             });
           })
-          .then((res) => {
-            console.log(res.data);
+          .then(() => {
+            router.push("/app");
           });
-      })
-      .then(() => {
-        router.push("/app");
       })
       .catch((error) => {
         console.error(error);
