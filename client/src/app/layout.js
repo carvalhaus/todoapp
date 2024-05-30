@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import UserProvider from "@/context/userContext";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <link rel="icon" href="/images/logo.svg" sizes="any" />
         <UserProvider>{children}</UserProvider>
+        <Toaster />
       </body>
     </html>
   );

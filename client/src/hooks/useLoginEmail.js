@@ -1,3 +1,4 @@
+import { useToast } from "@/components/ui/use-toast";
 import { auth } from "@/services/firebase";
 import axios from "axios";
 import {
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 function useLoginEmail() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleLoginEmail = (email, password) => {
     setPersistence(auth, browserSessionPersistence)
@@ -31,7 +33,10 @@ function useLoginEmail() {
           });
       })
       .catch((error) => {
-        console.error(error);
+        toast({
+          variant: "destructive",
+          description: error.message,
+        });
       });
   };
 

@@ -1,4 +1,5 @@
 const { auth } = require("@/services/firebase");
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import {
   GoogleAuthProvider,
@@ -10,6 +11,7 @@ import { useRouter } from "next/navigation";
 
 function useGoogleAuth() {
   const router = useRouter();
+  const { toast } = useToast();
   const provider = new GoogleAuthProvider();
 
   const handleGoogleAuth = () => {
@@ -33,7 +35,10 @@ function useGoogleAuth() {
           });
       })
       .catch((error) => {
-        console.error(error);
+        toast({
+          variant: "destructive",
+          description: error.message,
+        });
       });
   };
 
