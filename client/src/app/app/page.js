@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useUser } from "@/context/userContext";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import UserInfo from "@/components/app/user-info";
 import AddTask from "@/components/app/add-task";
@@ -24,16 +24,24 @@ import {
 function App() {
   const { user, handleLogout } = useUser();
   const router = useRouter();
-
-  const data = true;
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const keySession = Object.keys(sessionStorage);
     const session = sessionStorage.getItem(keySession);
     if (!session) {
-      router.push("/"); // Redirect to login or home page
+      router.push("/");
     }
   }, [router]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/tasks")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data.rows);
+      });
+  }, []);
+  console.log(data);
 
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">
@@ -99,7 +107,7 @@ function App() {
           </div>
 
           {data ? (
-            <TableTask />
+            <TableTask data={data} />
           ) : (
             <div>
               <Image
