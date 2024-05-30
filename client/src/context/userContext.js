@@ -13,9 +13,12 @@ export const useUser = () => {
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState();
+  const [formValue, setFormValue] = useState();
   const router = useRouter();
 
-  console.log("Context", user);
+  console.log("Context", formValue);
+
+  // console.log("Context", user);
 
   const handleLogout = async () => {
     await auth.signOut().then(() => {
@@ -32,7 +35,7 @@ export default function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, handleLogout }}>
+    <UserContext.Provider value={{ user, handleLogout, setFormValue }}>
       {children}
     </UserContext.Provider>
   );

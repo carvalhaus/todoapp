@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
@@ -22,18 +23,18 @@ import { cn } from "@/lib/utils";
 import { format, formatISO9075 } from "date-fns";
 import { useUser } from "@/context/userContext";
 
-const AddTaskSchema = z.object({
+const EditTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
   created_at: z.date({ message: "Please select a date" }),
   duration_days: z.string().min(1, { message: "Duration is required" }),
 });
 
-function AddTask() {
+function EditTask() {
   const [isPending, startTransition] = useTransition();
   const { setFormValue } = useUser();
 
   const form = useForm({
-    resolver: zodResolver(AddTaskSchema),
+    resolver: zodResolver(EditTaskSchema),
     defaultValues: {
       title: "",
       created_at: "",
@@ -56,9 +57,9 @@ function AddTask() {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Add your task</DialogTitle>
+        <DialogTitle>Edit your task</DialogTitle>
         <DialogDescription>
-          Add tasks to your profile here. Click save when you're done.
+          Edit your tasks here. Click save when you're done.
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
@@ -137,7 +138,6 @@ function AddTask() {
                       disabled={isPending}
                       placeholder="7 days"
                       type="number"
-                      min="0"
                     />
                   </FormControl>
                   <FormMessage />
@@ -154,4 +154,4 @@ function AddTask() {
   );
 }
 
-export default AddTask;
+export default EditTask;
