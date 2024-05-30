@@ -29,16 +29,16 @@ const EditTaskSchema = z.object({
   duration_days: z.string().min(1, { message: "Duration is required" }),
 });
 
-function EditTask() {
+function EditTask({ task }) {
   const [isPending, startTransition] = useTransition();
   const { setFormValue } = useUser();
 
   const form = useForm({
     resolver: zodResolver(EditTaskSchema),
     defaultValues: {
-      title: "",
-      created_at: "",
-      duration_days: "",
+      title: `${task.title}`,
+      created_at: `${task.created_at}`,
+      duration_days: `${task.duration_days}`,
     },
   });
 
@@ -75,7 +75,7 @@ function EditTask() {
                     <Input
                       {...field}
                       disabled={isPending}
-                      placeholder="Example taks"
+                      placeholder="Example task"
                       type="text"
                     />
                   </FormControl>

@@ -41,7 +41,7 @@ function TableTask({ data }) {
                   <FilePenLine color="#778599" />
                 </DialogTrigger>
                 <DialogContent>
-                  <EditTask />
+                  <EditTask task={task} />
                 </DialogContent>
               </Dialog>
             </TableCell>
