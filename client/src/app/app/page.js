@@ -14,9 +14,15 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import UserInfo from "@/components/app/user-info";
 import AddTask from "@/components/app/add-task";
 import TableTask from "@/components/app/table-task";
+import { LogOut, Settings } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function App() {
-  const { user } = useUser();
+  const { user, handleLogout } = useUser();
   const router = useRouter();
 
   const data = true;
@@ -37,8 +43,8 @@ function App() {
             <Image src={logo} alt="Logo Onday image" width={114} height={38} />
           </Link>
 
-          <Dialog>
-            <DialogTrigger asChild>
+          <Popover>
+            <PopoverTrigger asChild>
               <Avatar className="border-2 border-slate-500">
                 {!user?.photoURL ? (
                   <AvatarFallback className="bg-slate-800 text-white">
@@ -48,12 +54,35 @@ function App() {
                   <AvatarImage src={user?.photoURL} />
                 )}
               </Avatar>
-            </DialogTrigger>
+            </PopoverTrigger>
 
-            <DialogContent className="sm:max-w-[425px]">
-              <UserInfo />
-            </DialogContent>
-          </Dialog>
+            <PopoverContent className="flex flex-col justify-between items-center w-28 p-2">
+              <Dialog>
+                <DialogTrigger
+                  asChild
+                  className="w-full items-center focus-visible:ring-transparent"
+                >
+                  <Button variant="ghost" className="p-0 w-full justify-evenly">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent className="sm:max-w-[425px]">
+                  <UserInfo />
+                </DialogContent>
+              </Dialog>
+
+              <Button
+                variant="ghost"
+                className="p-0 w-full justify-evenly"
+                onClick={handleLogout}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </Button>
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div className="border-gray-300 border-[1px] drop-shadow-md rounded-md bg-white p-4 w-full flex flex-col items-center gap-12">
