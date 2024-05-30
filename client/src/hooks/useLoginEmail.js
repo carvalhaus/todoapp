@@ -1,4 +1,5 @@
 import { auth } from "@/services/firebase";
+import axios from "axios";
 import {
   browserSessionPersistence,
   setPersistence,
@@ -10,19 +11,31 @@ function useLoginEmail() {
   const router = useRouter();
 
   const handleLoginEmail = (email, password) => {
-    setPersistence(auth, browserSessionPersistence).then(async () => {
-      try {
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCredential.user;
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        return signInWithEmailAndPassword(auth, email, password);
+      })
+      .then(() => {
+        auth.currentUser
+          .getIdToken()
+          .then((token) => {
+            console.log(token);
+            return axios.get("http://localhost:3001/api", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
+      })
+      .then(() => {
         router.push("/app");
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error(error);
-      }
-    });
+      });
   };
 
   return { handleLoginEmail };

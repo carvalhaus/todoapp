@@ -1,4 +1,5 @@
 const { auth } = require("@/services/firebase");
+import axios from "axios";
 import {
   GoogleAuthProvider,
   browserSessionPersistence,
@@ -9,21 +10,31 @@ import { useRouter } from "next/navigation";
 
 function useGoogleAuth() {
   const router = useRouter();
+  const provider = new GoogleAuthProvider();
 
   const handleGoogleAuth = () => {
-    const provider = new GoogleAuthProvider();
-
-    setPersistence(auth, browserSessionPersistence).then(async () => {
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        router.push("/app");
-      } catch (error) {
-        console.log(error);
-      }
-    });
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        return signInWithPopup(auth, provider);
+      })
+      .then(() => {
+        auth.currentUser
+          .getIdToken()
+          .then((token) => {
+            console.log(token);
+            return axios.get("http://localhost:3001/api", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+          })
+          .then((res) => {
+            router.push("/app");
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleLogout = async () => {
