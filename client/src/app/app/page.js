@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useUser } from "@/context/userContext";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import UserInfo from "@/components/app/user-info";
 import AddTask from "@/components/app/add-task";
@@ -25,6 +25,10 @@ function App() {
   const { user, handleLogout } = useUser();
   const router = useRouter();
   const [data, setData] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [state, updateState] = useState();
+
+  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
     const keySession = Object.keys(sessionStorage);
@@ -35,13 +39,12 @@ function App() {
   }, [router]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/tasks")
+    fetch("http://localhost:3001/api/tasks")
       .then((res) => res.json())
       .then((data) => {
         setData(data.rows);
       });
-  }, []);
-  console.log(data);
+  }, [open, state]);
 
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">
@@ -96,18 +99,18 @@ function App() {
         <div className="border-gray-300 border-[1px] drop-shadow-md rounded-md bg-white p-4 w-full flex flex-col items-center gap-12">
           <div className="border-b-[1px] w-full flex justify-between pb-4">
             <h1 className="text-4xl font-medium">Keep focus</h1>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button className="uppercase font-medium">Add task</Button>
               </DialogTrigger>
               <DialogContent>
-                <AddTask />
+                <AddTask userId={user?.uid} setOpen={setOpen} />
               </DialogContent>
             </Dialog>
           </div>
 
           {data ? (
-            <TableTask data={data} />
+            <TableTask data={data} forceUpdate={forceUpdate} />
           ) : (
             <div>
               <Image
