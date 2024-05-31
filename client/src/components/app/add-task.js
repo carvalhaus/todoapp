@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -20,7 +18,7 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
 import { format, formatISO9075 } from "date-fns";
-import { useUser } from "@/context/userContext";
+import axios from "axios";
 
 const AddTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -28,9 +26,8 @@ const AddTaskSchema = z.object({
   duration_days: z.string().min(1, { message: "Duration is required" }),
 });
 
-function AddTask() {
+function AddTask({ userId, setOpen }) {
   const [isPending, startTransition] = useTransition();
-  const { setFormValue } = useUser();
 
   const form = useForm({
     resolver: zodResolver(AddTaskSchema),
@@ -47,9 +44,21 @@ function AddTask() {
       created_at: formatISO9075(new Date(values.created_at), {
         representation: "date",
       }),
+      user_id: userId,
     };
     startTransition(async () => {
-      setFormValue(formatedValues);
+      try {
+        axios
+          .post("http://localhost:3001/api/tasks", formatedValues)
+          .then(() => {
+            setOpen(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
     });
   };
 
@@ -145,6 +154,7 @@ function AddTask() {
               )}
             />
           </div>
+
           <Button type="submit" disabled={isPending}>
             Save changes
           </Button>
