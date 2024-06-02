@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const database = require("../services/database");
-const { createTask, deleteTask } = require("../models/Task");
+const { createTask, deleteTask, updateTask } = require("../models/Task");
 
 router.get("/tasks", (req, res) => {
   database.pool
@@ -21,8 +21,7 @@ router.post("/tasks", async (req, res) => {
     await createTask(task);
     res.status(201).send("Task created");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Server error");
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -31,8 +30,18 @@ router.delete("/tasks/:id", async (req, res) => {
     await deleteTask(req.params.id);
     res.status(204).send("Task deleted");
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Server error");
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.put("/tasks/:id", async (req, res) => {
+  const id = req.params.id;
+  const task = req.body;
+  try {
+    await updateTask(id, task);
+    res.status(204).send("Task updated");
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
 });
 

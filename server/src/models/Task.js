@@ -34,7 +34,23 @@ const deleteTask = async (id) => {
   }
 };
 
+const updateTask = async (id, task) => {
+  const query = `
+      UPDATE tasks
+      SET title= $1, created_at= $2, duration_days= $3
+      WHERE id= $4
+    `;
+  const values = [task.title, task.created_at, task.duration_days, id];
+  try {
+    await database.pool.query(query, values);
+    console.log("Task updated");
+  } catch (error) {
+    console.error("Error inserting task", error);
+  }
+};
+
 module.exports = {
   createTask,
   deleteTask,
+  updateTask,
 };
