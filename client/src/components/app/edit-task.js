@@ -20,8 +20,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
-import { format, formatISO9075 } from "date-fns";
-import { useUser } from "@/context/userContext";
+import { format, formatISO9075, parseISO } from "date-fns";
+import axios from "axios";
 
 const EditTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -29,15 +29,14 @@ const EditTaskSchema = z.object({
   duration_days: z.string().min(1, { message: "Duration is required" }),
 });
 
-function EditTask({ task }) {
+function EditTask({ task, setOpen, forceUpdate }) {
   const [isPending, startTransition] = useTransition();
-  const { setFormValue } = useUser();
 
   const form = useForm({
     resolver: zodResolver(EditTaskSchema),
     defaultValues: {
-      title: `${task.title}`,
-      created_at: `${task.created_at}`,
+      title: task.title,
+      created_at: task.created_at ? parseISO(task.created_at) : new Date(),
       duration_days: `${task.duration_days}`,
     },
   });
@@ -50,7 +49,21 @@ function EditTask({ task }) {
       }),
     };
     startTransition(async () => {
-      setFormValue(formatedValues);
+      try {
+        axios
+          .put(`http://localhost:3001/api/tasks/${task.id}`, formatedValues)
+          .then(() => {
+            setOpen(false);
+          })
+          .then(() => {
+            forceUpdate();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } catch (error) {
+        console.error(error);
+      }
     });
   };
 

@@ -12,8 +12,16 @@ import { Check, Delete, FilePenLine } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import EditTask from "./edit-task";
 import axios from "axios";
+import { useState } from "react";
 
 function TableTask({ data, forceUpdate }) {
+  const [open, setOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleEditClick = (task) => {
+    setSelectedTask(task);
+  };
+
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:3001/api/tasks/${id}`)
@@ -46,14 +54,18 @@ function TableTask({ data, forceUpdate }) {
             <TableCell>{task.title}</TableCell>
             <TableCell>{format(new Date(task.created_at), "PP")}</TableCell>
             <TableCell>{format(new Date(task.deadline), "PP")}</TableCell>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
-                <TableCell>
+                <TableCell onClick={() => handleEditClick(task)}>
                   <FilePenLine color="#778599" />
                 </TableCell>
               </DialogTrigger>
               <DialogContent>
-                <EditTask task={task} />
+                <EditTask
+                  task={selectedTask}
+                  setOpen={setOpen}
+                  forceUpdate={forceUpdate}
+                />
               </DialogContent>
             </Dialog>
             <TableCell
