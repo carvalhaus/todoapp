@@ -17,6 +17,18 @@ import { useState } from "react";
 function TableTask({ data, forceUpdate }) {
   const [open, setOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [checked, setChecked] = useState([]);
+
+  const now = new Date().getDate();
+
+  const handleCheck = (index) => {
+    if (checked.includes(index)) {
+      const result = checked.filter((id) => id !== index);
+      setChecked(result);
+    } else {
+      setChecked([...checked, index]);
+    }
+  };
 
   const handleEditClick = (task) => {
     setSelectedTask(task);
@@ -49,11 +61,28 @@ function TableTask({ data, forceUpdate }) {
       </TableHeader>
       <TableBody>
         {data.map((task, index) => (
-          <TableRow key={index}>
+          <TableRow
+            key={index}
+            className={checked.includes(index) ? "line-through" : ""}
+          >
             <TableCell className="font-medium">{index + 1}</TableCell>
-            <TableCell>{task.title}</TableCell>
+            <TableCell
+              className={
+                checked.includes(index) ? `text-[#42a162] font-semibold` : ``
+              }
+            >
+              {task.title}
+            </TableCell>
             <TableCell>{format(new Date(task.created_at), "PP")}</TableCell>
-            <TableCell>{format(new Date(task.deadline), "PP")}</TableCell>
+            <TableCell
+              className={
+                now - new Date(task.deadline).getDate() >= -1
+                  ? "text-red-700 font-bold"
+                  : ""
+              }
+            >
+              {format(new Date(task.deadline), "PP")}
+            </TableCell>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <TableCell onClick={() => handleEditClick(task)}>
@@ -74,8 +103,8 @@ function TableTask({ data, forceUpdate }) {
             >
               <Delete color="#778599" />
             </TableCell>
-            <TableCell>
-              <Check color="#778599" />
+            <TableCell onClick={() => handleCheck(index)}>
+              <Check color={checked.includes(index) ? `#42a162` : `#778599`} />
             </TableCell>
           </TableRow>
         ))}
