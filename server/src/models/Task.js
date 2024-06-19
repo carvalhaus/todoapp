@@ -1,6 +1,19 @@
 const database = require("../services/database");
 const { v4: uuidv4 } = require("uuid");
 
+const selectTask = async (id) => {
+  const query = `SELECT * FROM tasks WHERE user_id = $1`;
+
+  const user_id = [id];
+  try {
+    const result = await database.pool.query(query, user_id);
+    console.log("Task listed");
+    return result;
+  } catch (error) {
+    console.error("Error listing task", error);
+  }
+};
+
 const createTask = async (task) => {
   const id = uuidv4();
   const query = `
@@ -50,6 +63,7 @@ const updateTask = async (id, task) => {
 };
 
 module.exports = {
+  selectTask,
   createTask,
   deleteTask,
   updateTask,

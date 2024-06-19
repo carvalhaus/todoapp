@@ -1,17 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const database = require("../services/database");
-const { createTask, deleteTask, updateTask } = require("../models/Task");
+const {
+  createTask,
+  deleteTask,
+  updateTask,
+  selectTask,
+} = require("../models/Task");
 
-router.get("/tasks", (req, res) => {
-  database.pool
-    .query("SELECT * FROM tasks")
-    .then((result) => {
-      return res.status(200).json(result);
-    })
-    .catch((error) => {
-      return res.status(500).json({ error: error.message });
-    });
+router.get("/tasks/:user_id", async (req, res) => {
+  const user_id = req.params.user_id;
+
+  try {
+    const result = await selectTask(user_id);
+    return res.status(201).json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 router.post("/tasks", async (req, res) => {
