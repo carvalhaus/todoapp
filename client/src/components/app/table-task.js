@@ -21,8 +21,6 @@ function TableTask({ data, forceUpdate }) {
 
   const now = new Date().getDate();
 
-  console.log(checked);
-
   const handleCheck = (task) => {
     if (checked.includes(task)) {
       const result = checked.filter((id) => id !== task);
