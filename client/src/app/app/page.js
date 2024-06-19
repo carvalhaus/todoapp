@@ -35,8 +35,12 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setData(data.rows);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+        setData([]);
       });
-  }, [open, state]);
+  }, [user?.uid, open, state]);
 
   useEffect(() => {
     const keySession = Object.keys(sessionStorage);
