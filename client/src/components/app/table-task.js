@@ -21,12 +21,14 @@ function TableTask({ data, forceUpdate }) {
 
   const now = new Date().getDate();
 
-  const handleCheck = (index) => {
-    if (checked.includes(index)) {
-      const result = checked.filter((id) => id !== index);
+  console.log(checked);
+
+  const handleCheck = (task) => {
+    if (checked.includes(task)) {
+      const result = checked.filter((id) => id !== task);
       setChecked(result);
     } else {
-      setChecked([...checked, index]);
+      setChecked([...checked, task]);
     }
   };
 
@@ -63,12 +65,12 @@ function TableTask({ data, forceUpdate }) {
         {data.map((task, index) => (
           <TableRow
             key={index}
-            className={checked.includes(index) ? "line-through" : ""}
+            className={checked.includes(task.id) ? "line-through" : ""}
           >
             <TableCell className="font-medium">{index + 1}</TableCell>
             <TableCell
               className={
-                checked.includes(index) ? `text-[#42a162] font-semibold` : ``
+                checked.includes(task.id) ? `text-[#42a162] font-semibold` : ``
               }
             >
               {task.title}
@@ -103,8 +105,10 @@ function TableTask({ data, forceUpdate }) {
             >
               <Delete color="#778599" />
             </TableCell>
-            <TableCell onClick={() => handleCheck(index)}>
-              <Check color={checked.includes(index) ? `#42a162` : `#778599`} />
+            <TableCell onClick={() => handleCheck(task.id)}>
+              <Check
+                color={checked.includes(task.id) ? `#42a162` : `#778599`}
+              />
             </TableCell>
           </TableRow>
         ))}
