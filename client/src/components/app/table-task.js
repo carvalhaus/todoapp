@@ -13,11 +13,13 @@ import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import EditTask from "./edit-task";
 import axios from "axios";
 import { useState } from "react";
+import { useUser } from "@/context/userContext";
 
 function TableTask({ data, forceUpdate }) {
   const [open, setOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [checked, setChecked] = useState([]);
+  const { user } = useUser();
 
   const now = new Date().getDate();
 
@@ -36,7 +38,11 @@ function TableTask({ data, forceUpdate }) {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:3001/api/tasks/${id}`)
+      .delete(`http://localhost:3001/api/tasks/${id}`, {
+        headers: {
+          Authorization: `Bearer ${user?.accessToken}`,
+        },
+      })
       .then(() => {
         forceUpdate();
       })

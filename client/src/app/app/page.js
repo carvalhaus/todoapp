@@ -31,7 +31,11 @@ function App() {
   const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/tasks/${user?.uid}`)
+    fetch(`http://localhost:3001/api/tasks/${user?.uid}`, {
+      headers: {
+        Authorization: `Bearer ${user?.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setData(data.rows);

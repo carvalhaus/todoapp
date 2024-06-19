@@ -19,6 +19,7 @@ import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
 import { format, formatISO9075 } from "date-fns";
 import axios from "axios";
+import { useUser } from "@/context/userContext";
 
 const AddTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -28,6 +29,7 @@ const AddTaskSchema = z.object({
 
 function AddTask({ userId, setOpen }) {
   const [isPending, startTransition] = useTransition();
+  const { user } = useUser();
 
   const form = useForm({
     resolver: zodResolver(AddTaskSchema),
@@ -49,7 +51,11 @@ function AddTask({ userId, setOpen }) {
     startTransition(async () => {
       try {
         axios
-          .post("http://localhost:3001/api/tasks", formatedValues)
+          .post("http://localhost:3001/api/tasks", formatedValues, {
+            headers: {
+              Authorization: `Bearer ${user?.accessToken}`,
+            },
+          })
           .then(() => {
             setOpen(false);
           })

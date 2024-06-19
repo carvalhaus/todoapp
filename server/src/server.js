@@ -11,7 +11,7 @@ app.use(cors());
 
 const port = 3001;
 
-app.use("/api", TasksController);
+app.use("/api", AuthFirebaseToken, TasksController);
 
 app.get("/api", AuthFirebaseToken, (req, res) => {
   res.send("API REQUEST RESPONSE");

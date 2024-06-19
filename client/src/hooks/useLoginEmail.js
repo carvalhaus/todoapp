@@ -21,7 +21,6 @@ function useLoginEmail() {
         auth.currentUser
           .getIdToken()
           .then((token) => {
-            console.log(token);
             return axios.get("http://localhost:3001/api", {
               headers: {
                 Authorization: `Bearer ${token}`,
