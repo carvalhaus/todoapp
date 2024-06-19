@@ -31,20 +31,20 @@ function App() {
   const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
+    fetch(`http://localhost:3001/api/tasks/${user?.uid}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data.rows);
+      });
+  }, [open, state]);
+
+  useEffect(() => {
     const keySession = Object.keys(sessionStorage);
     const session = sessionStorage.getItem(keySession);
     if (!session) {
       router.push("/");
     }
   }, [router]);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/api/tasks")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.rows);
-      });
-  }, [open, state]);
 
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">
