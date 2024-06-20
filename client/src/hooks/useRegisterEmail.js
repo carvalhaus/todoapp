@@ -23,7 +23,7 @@ function UseRegisterEmail() {
         updateProfile(auth.currentUser, {
           displayName: username,
         });
-        router.push("/app");
+        router.push("/auth/login");
       } catch (error) {
         console.error(error);
       }

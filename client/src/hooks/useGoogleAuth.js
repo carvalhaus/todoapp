@@ -23,6 +23,7 @@ function useGoogleAuth() {
         auth.currentUser
           .getIdToken()
           .then((token) => {
+            document.cookie = "__session=" + token + ";max-age=3600";
             return axios.get("http://localhost:3001/api", {
               headers: {
                 Authorization: `Bearer ${token}`,
