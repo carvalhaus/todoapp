@@ -24,7 +24,7 @@ import {
 function App() {
   const { user, handleLogout } = useUser();
   const router = useRouter();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [state, updateState] = useState();
 
@@ -117,9 +117,7 @@ function App() {
             </Dialog>
           </div>
 
-          {data ? (
-            <TableTask data={data} forceUpdate={forceUpdate} />
-          ) : (
+          {data?.length === 0 ? (
             <div>
               <Image
                 src={noData}
@@ -131,6 +129,8 @@ function App() {
                 No data to be shown!
               </p>
             </div>
+          ) : (
+            <TableTask data={data} forceUpdate={forceUpdate} />
           )}
         </div>
       </div>

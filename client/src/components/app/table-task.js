@@ -66,7 +66,7 @@ function TableTask({ data, forceUpdate }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((task, index) => (
+        {data?.map((task, index) => (
           <TableRow
             key={index}
             className={checked.includes(task.id) ? "line-through" : ""}
