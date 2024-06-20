@@ -18,6 +18,7 @@ export default function UserProvider({ children }) {
 
   const handleLogout = async () => {
     await auth.signOut().then(() => {
+      document.cookie = document.cookie + ";max-age=0";
       router.push("/");
     });
   };
