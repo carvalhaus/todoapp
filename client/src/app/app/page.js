@@ -23,7 +23,6 @@ import {
 
 function App() {
   const { user, handleLogout } = useUser();
-  const router = useRouter();
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [state, updateState] = useState();
@@ -45,14 +44,6 @@ function App() {
         setData([]);
       });
   }, [user?.uid, open, state]);
-
-  useEffect(() => {
-    const keySession = Object.keys(sessionStorage);
-    const session = sessionStorage.getItem(keySession);
-    if (!session) {
-      router.push("/");
-    }
-  }, [router]);
 
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">
