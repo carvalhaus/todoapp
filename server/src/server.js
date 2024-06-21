@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const database = require("./services/database");
 const AuthFirebaseToken = require("./middlewares/firebase-admin");
 const TasksController = require("./controllers/TasksController");
 

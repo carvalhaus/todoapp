@@ -10,7 +10,5 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "if-env": "^1.0.4"
-  }
+  "dependencies": {}
 }

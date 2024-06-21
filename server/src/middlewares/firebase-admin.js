@@ -3,7 +3,15 @@ let firebaseApp = null;
 
 module.exports = (req, res, next) => {
   const admin = require("firebase-admin");
-  const serviceAccount = require("../../firebase-admin.json");
+
+  const firebaseConfigBase64 = process.env.FIREBASE_CONFIG_BASE64;
+  const firebaseConfigJson = Buffer.from(
+    firebaseConfigBase64,
+    "base64"
+  ).toString("utf-8");
+  const serviceAccount = JSON.parse(firebaseConfigJson);
+
+  // const serviceAccount = require("../../firebase-admin.json");
 
   if (!firebaseApp) {
     firebaseApp = admin.initializeApp({
