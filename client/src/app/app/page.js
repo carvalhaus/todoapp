@@ -96,13 +96,13 @@ function App() {
         </div>
 
         <div className="border-gray-300 border-[1px] drop-shadow-md rounded-md bg-white p-4 w-full flex flex-col items-center gap-12">
-          <div className="border-b-[1px] w-full flex justify-between pb-4">
+          <div className="border-b-[1px] w-full flex justify-between items-center pb-4">
             <h1 className="text-4xl font-medium">Keep focus</h1>
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <Button className="uppercase font-medium">Add task</Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="w-auto max-sm:w-3/4">
                 <AddTask userId={user?.uid} setOpen={setOpen} />
               </DialogContent>
             </Dialog>

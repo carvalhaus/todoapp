@@ -53,13 +53,16 @@ function TableTask({ data, forceUpdate }) {
 
   return (
     <Table>
-      <TableCaption>A list of your tasks.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-20">Nr.</TableHead>
-          <TableHead>Task</TableHead>
-          <TableHead className="w-44">Created at</TableHead>
-          <TableHead className="w-44">Deadline</TableHead>
+          <TableHead className="w-20 text-center">Nr.</TableHead>
+          <TableHead className="text-center w-auto">Task</TableHead>
+          <TableHead className="w-44 text-center max-lg:w-[104px] max-md:hidden">
+            Created at
+          </TableHead>
+          <TableHead className="w-44 text-center max-lg:w-[104px]">
+            Deadline
+          </TableHead>
           <TableHead className="text-right w-5"></TableHead>
           <TableHead className="text-right w-5"></TableHead>
           <TableHead className="text-right w-5"></TableHead>
@@ -71,31 +74,38 @@ function TableTask({ data, forceUpdate }) {
             key={index}
             className={checked.includes(task.id) ? "line-through" : ""}
           >
-            <TableCell className="font-medium">{index + 1}</TableCell>
+            <TableCell className="font-medium text-center">
+              {index + 1}
+            </TableCell>
             <TableCell
               className={
-                checked.includes(task.id) ? `text-[#42a162] font-semibold` : ``
+                checked.includes(task.id)
+                  ? `text-[#42a162] font-semibold text-center`
+                  : `text-center`
               }
             >
               {task.title}
             </TableCell>
-            <TableCell>{format(new Date(task.created_at), "PP")}</TableCell>
+            <TableCell className="text-center max-md:hidden">
+              {format(new Date(task.created_at), "PP")}
+            </TableCell>
             <TableCell
               className={
                 now - new Date(task.deadline).getDate() >= -1
-                  ? "text-red-700 font-bold"
-                  : ""
+                  ? "text-red-700 font-bold text-center"
+                  : "text-center"
               }
             >
               {format(new Date(task.deadline), "PP")}
             </TableCell>
+
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger asChild>
                 <TableCell onClick={() => handleEditClick(task)}>
                   <FilePenLine color="#778599" />
                 </TableCell>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="w-auto max-sm:w-3/4">
                 <EditTask
                   task={selectedTask}
                   setOpen={setOpen}
