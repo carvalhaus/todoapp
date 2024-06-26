@@ -73,7 +73,7 @@ function AddTask({ userId, setOpen }) {
       <DialogHeader>
         <DialogTitle>Add your task</DialogTitle>
         <DialogDescription>
-          Add tasks to your profile here. Click save when you're done.
+          Add tasks to your profile here. Click save when you&apos;re done.
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>

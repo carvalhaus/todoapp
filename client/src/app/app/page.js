@@ -43,7 +43,7 @@ function App() {
         console.error("Error fetching tasks:", error);
         setData([]);
       });
-  }, [user?.uid, open, state]);
+  }, [user?.uid, user?.accessToken, open, state]);
 
   return (
     <main className="bg-slate-50 min-h-screen flex justify-center py-6">

@@ -15,17 +15,19 @@ export default function Home() {
         <nav className="py-6 flex justify-between">
           <Image src={logo} alt="Logo Onday image" width={114} height={38} />
           <Link href="/auth/login">
-            <Button className="rounded-2xl font-semibold">Let's focus</Button>
+            <Button className="rounded-2xl font-semibold">
+              Let&apos;s focus
+            </Button>
           </Link>
         </nav>
 
         <section className="flex justify-between items-center">
           <div className={`${vollkorn.className} w-3/5`}>
             <h1 className="font-medium text-6xl ">
-              Simple todo lists. Minimal and bloat-free.
+              Simple to do lists. Minimal and bloat-free.
             </h1>
             <h2 className="pt-2 text-2xl">
-              Just the features you expect to focus on what’s important
+              Just the features you expect to focus on what&apos;s important
             </h2>
           </div>
 

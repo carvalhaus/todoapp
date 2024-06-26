@@ -78,7 +78,7 @@ function EditTask({ task, setOpen, forceUpdate }) {
       <DialogHeader>
         <DialogTitle>Edit your task</DialogTitle>
         <DialogDescription>
-          Edit your tasks here. Click save when you're done.
+          Edit your tasks here. Click save when you&apos;re done.
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
