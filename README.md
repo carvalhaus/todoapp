@@ -95,6 +95,8 @@ This will build and start containers for the backend, frontend, and database.
 
 Once the containers are up and running, you can access the application at `http://localhost:3000` in your browser.
 
+If you want to consult the API documentation, access `http://localhost:3001/api/api-docs`.
+
 ## Features
 
 - User authentication with email/password or Google account
